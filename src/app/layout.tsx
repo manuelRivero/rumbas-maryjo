@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { theme } from "@/theme";
 import { initMercadoPago } from '@mercadopago/sdk-react'
-initMercadoPago('YOUR_PUBLIC_KEY');
+initMercadoPago(process.env.NEXT_MERCADO_PAGO_KEY as string);
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

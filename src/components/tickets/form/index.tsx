@@ -45,7 +45,7 @@ export default function TicketsForm({ eventData }: Props) {
   const submit = async (values: Form) => {
     try {
       setLoading(true);
-      await postTicket({ ...values, id: eventData._id });
+     const response =  await postTicket({ ...values, id: eventData._id });
       reset({
         name: "",
         email: "",
@@ -53,36 +53,12 @@ export default function TicketsForm({ eventData }: Props) {
         quantity: "1",
         price: String(eventData.price),
       });
+      window.location.href = response.data.init_point;
     } catch (error) {
       console.log("error");
     } finally {
       setLoading(false);
     }
-  };
-
-  const initialization = {
-    preferenceId: "<PREFERENCE_ID>",
-  };
-
-  const customization = {
-    texts: {
-      valueProp: "smart_option",
-    },
-  };
-
-  const onSubmit = async (formData: any) => {
-    // callback llamado al hacer clic en Wallet Brick
-    // esto es posible porque Brick es un botón
-  };
-
-  const onError = async (error: any) => {
-    // callback llamado para todos los casos de error de Brick
-    console.log(error);
-  };
-
-  const onReady = async () => {
-    // Callback llamado cuando Brick esté listo.
-    // Aquí puedes ocultar loadings en tu sitio, por ejemplo.
   };
 
   useEffect(() => {
@@ -183,7 +159,7 @@ export default function TicketsForm({ eventData }: Props) {
         </Button>
 
         <Wallet
-          initialization={{ preferenceId: "<PREFERENCE_ID>" }}
+          initialization={{ preferenceId: process.env.NEXT_MERCADO_PAGO_KEY as string }}
           customization={{ texts: { valueProp: "smart_option" } }}
         />
       </Stack>
