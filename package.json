@@ -1,0 +1,33 @@
+{
+  "name": "boleteria",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.13.5",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@mercadopago/sdk-react": "^0.0.19",
+    "@mui/icons-material": "^6.1.8",
+    "@mui/material": "^6.1.8",
+    "@mui/material-nextjs": "^6.1.8",
+    "@mui/x-date-pickers": "^7.22.3",
+    "@types/node": "22.9.3",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "axios": "^1.7.8",
+    "dayjs": "^1.11.13",
+    "eslint": "9.15.0",
+    "eslint-config-next": "15.0.3",
+    "next": "15.0.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-hook-form": "^7.53.2",
+    "typescript": "5.7.2"
+  }
+}
