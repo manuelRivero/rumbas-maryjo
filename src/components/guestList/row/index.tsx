@@ -1,7 +1,7 @@
 import { Button, CircularProgress, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { TicketItem } from "../table";
 import { updateTickets } from "@/client/tickets";
+import { TicketItem } from "@/interfaces/tickets";
 
 interface Props {
   index: number;

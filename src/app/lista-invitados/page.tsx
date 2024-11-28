@@ -3,6 +3,7 @@ import { Container, Paper, Typography } from '@mui/material'
 import { getTickets } from '@/client/tickets';
 import GuestTable from '@/components/guestList/table';
 
+export const dynamic = 'force-dynamic'
 
 const getData = async ()=> {
     try {
@@ -13,6 +14,7 @@ const getData = async ()=> {
         throw error
     }
 }
+
 export default async function GuestList() {
     const {list} = await getData()
   return (

@@ -14,6 +14,9 @@ import Link from "next/link";
 import { getEventDetail } from "@/client/events";
 
 const hardCoreEventId = "6745e04ad3c9341ada1b47de";
+
+export const dynamic = 'force-dynamic'
+
 const getData = async () => {
   try {
     const { data: eventDetail } = await getEventDetail(hardCoreEventId);

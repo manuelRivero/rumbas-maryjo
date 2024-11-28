@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { updateTickets } from "@/client/tickets";
 import GuestRow from "../row";
+import { Ticket, TicketItem } from "@/interfaces/tickets";
 
 const columns = [
   {
@@ -34,18 +35,8 @@ const columns = [
 interface Props {
   list: Ticket[];
 }
-interface Ticket {
-  eventId: string;
-  id: string;
-  name: string;
-  age: string;
-  email: string;
-  tickets: TicketItem[] | undefined;
-}
-export interface TicketItem {
-  status: "active" | "inactive";
-  _id: string;
-}
+
+
 
 export default function GuestTable({ list }: Props) {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
