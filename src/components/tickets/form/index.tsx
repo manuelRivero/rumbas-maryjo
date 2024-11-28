@@ -22,6 +22,7 @@ interface Form {
   dni: string;
   quantity: string;
   price: string;
+  phone: string;
 }
 interface Props {
   eventData: Event;
@@ -41,18 +42,13 @@ export default function TicketsForm({ eventData }: Props) {
   const watchPrice = watch("price");
   const [loading, setLoading] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(Number(watchPrice));
+  const [showFormAlert, setShowFormAlert] = useState<boolean>(false);
 
   const submit = async (values: Form) => {
     try {
       setLoading(true);
-     const response =  await postTicket({ ...values, id: eventData._id });
-      reset({
-        name: "",
-        email: "",
-        dni: "",
-        quantity: "1",
-        price: String(eventData.price),
-      });
+      const response = await postTicket({ ...values, id: eventData._id });
+      setShowFormAlert(true);
       window.location.href = response.data.init_point;
     } catch (error) {
       console.log("error");
@@ -121,10 +117,28 @@ export default function TicketsForm({ eventData }: Props) {
               variant="outlined"
               value={field.value}
               onChange={field.onChange}
-              helperText={
-                fieldState.error?.message ??
-                "Te enviaremos tu entrada a este correo electrónico"
-              }
+              helperText={fieldState.error?.message}
+              error={Boolean(fieldState.error)}
+            />
+          )}
+          rules={{
+            required: "Campo obligatorio *",
+          }}
+        />
+      </Box>
+      <Box sx={{ marginBottom: 2 }}>
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field, fieldState }) => (
+            <TextField
+              sx={{ width: "100%" }}
+              id="phone"
+              label="Numero de teléfono *"
+              variant="outlined"
+              value={field.value}
+              onChange={field.onChange}
+              helperText={fieldState.error?.message}
               error={Boolean(fieldState.error)}
             />
           )}
@@ -157,12 +171,12 @@ export default function TicketsForm({ eventData }: Props) {
         <Button variant="contained" type="submit">
           {loading ? <CircularProgress /> : "Comprar"}
         </Button>
-
-        <Wallet
-          initialization={{ preferenceId: process.env.NEXT_MERCADO_PAGO_KEY as string }}
-          customization={{ texts: { valueProp: "smart_option" } }}
-        />
       </Stack>
+      {showFormAlert && (
+        <Typography variant="h5" sx={{ marginTop: 2, textAlign: "center" }}>
+          Estás siendo redirigido a Mercado Pago para completar tu compra.
+        </Typography>
+      )}
     </form>
   );
 }
