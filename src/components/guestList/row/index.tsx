@@ -1,7 +1,9 @@
 import { Button, CircularProgress, Stack, Typography } from "@mui/material";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import React, { useState } from "react";
 import { updateTickets } from "@/client/tickets";
 import { TicketItem } from "@/interfaces/tickets";
+import { useRouter } from "next/navigation";
 
 interface Props {
   index: number;
@@ -9,13 +11,13 @@ interface Props {
   eventId: string;
 }
 export default function GuestRow({ item, index, eventId }: Props) {
+  const router= useRouter()
   const [loading, setLoading] = useState<boolean>(false);
-  const [status, setStatus] = useState<string>(item.status);
   const handleUpdate = async () => {
     try {
       setLoading(true);
       const response = await updateTickets(eventId, item._id);
-      setStatus("inactive");
+      router.refresh()
     } catch (error) {
     } finally {
       setLoading(false);
@@ -30,12 +32,15 @@ export default function GuestRow({ item, index, eventId }: Props) {
       alignItems="flex-start"
     >
       <Typography variant="body2">Entrada #{index + 1}</Typography>
-      {status === "active" ? (
+      {item.status === "active" ? (
         <Button variant="contained" onClick={handleUpdate}>
           {loading ? <CircularProgress size={12} color="inherit" /> : "Confirmar asistencia"}
         </Button>
       ) : (
+        <Stack direction="row" gap={2}>
         <Typography>Asistencia confirmada</Typography>
+        <CheckCircleOutlineIcon />
+        </Stack>
       )}
     </Stack>
   );

@@ -77,7 +77,7 @@ export default function GuestTable({ list }: Props) {
         {/* Cuerpo de la tabla */}
         <TableBody>
           {list.map((row) => (
-            <React.Fragment key={row.id}>
+            <React.Fragment key={row._id}>
               <TableRow>
                 {columns.map((column) => (
                   <TableCell key={column.field} sx={{ whiteSpace: "nowrap" }}>
@@ -89,15 +89,15 @@ export default function GuestTable({ list }: Props) {
                     sx={{ whiteSpace: "nowrap" }}
                     variant="contained"
                     onClick={() =>
-                      setExpandedRow(expandedRow === row.id ? null : row.id)
+                      setExpandedRow(expandedRow === row._id ? null : row._id)
                     }
                   >
-                    {expandedRow === row.id ? "Ocultar" : "Ver detalle"}
+                    {expandedRow === row._id ? "Ocultar" : "Ver detalle"}
                   </Button>
                 </TableCell>
               </TableRow>
               {/* Fila expandida */}
-              {expandedRow === row.id && (
+              {expandedRow === row._id && (
                 <TableRow>
                   <TableCell colSpan={columns.length + 1}>
                     <Box sx={{ padding: 2, backgroundColor: "#f9f9f9" }}>
