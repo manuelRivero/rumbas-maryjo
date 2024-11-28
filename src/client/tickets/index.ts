@@ -23,7 +23,7 @@ export const updateTickets = (
   eventId: string,
   ticketItemId: string
 ): Promise<AxiosResponse<any, any>> => {
-  return axiosInstance.put("/tickets/update-ticket" + eventId, {
+  return axiosInstance.put("/tickets/update-ticket/" + eventId, {
     ticketId: ticketItemId,
   });
 };
