@@ -31,7 +31,7 @@ export default function GuestRow({ item, index, eventId }: Props) {
       justifyContent="flex-start"
       alignItems="flex-start"
     >
-      <Typography variant="body2">Entrada #{index + 1}</Typography>
+      <Typography variant="body2">Entrada <strong>#{index + 1}</strong></Typography>
       {item.status === "active" ? (
         <Button variant="contained" onClick={handleUpdate}>
           {loading ? <CircularProgress size={12} color="inherit" /> : "Confirmar asistencia"}

@@ -1,6 +1,6 @@
 export interface Ticket {
     eventId: string;
-    id: string;
+    _id: string;
     name: string;
     age: string;
     email: string;

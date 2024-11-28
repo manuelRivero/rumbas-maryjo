@@ -1,19 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Paper, Stack, Typography } from "@mui/material";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+
 import { updateTickets } from "@/client/tickets";
 import GuestRow from "../row";
 import { Ticket, TicketItem } from "@/interfaces/tickets";
@@ -26,6 +16,11 @@ const columns = [
     width: 500,
   },
   {
+    field: "dni",
+    headerName: "DNI",
+    type: "number",
+  },
+  {
     field: "phone",
     headerName: "Teléfono",
     type: "number",
@@ -36,13 +31,11 @@ interface Props {
   list: Ticket[];
 }
 
-
-
 export default function GuestTable({ list }: Props) {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   const handleUpdate = (ticketId: string, itemId: string) => {
-    updateTickets
+    updateTickets;
     // setList((prevList) =>
     //   prevList.map((ticket) =>
     //     ticket.id === ticketId
@@ -62,44 +55,53 @@ export default function GuestTable({ list }: Props) {
     // );
   };
   return (
-    <TableContainer component={Paper} sx={{ overflow: "auto" }}>
       <Table aria-label="collapsible table">
         {/* Encabezado de la tabla */}
-        <TableHead>
-          <TableRow>
+        <Thead>
+          <Tr>
             {columns.map((column) => (
-              <TableCell key={column.field}>{column.headerName}</TableCell>
+              <Th key={column.field}>
+                <Box sx={{ padding: 2 }}>{column.headerName}</Box>
+              </Th>
             ))}
-            <TableCell>Acciones</TableCell>
-          </TableRow>
-        </TableHead>
+            <Th>
+              <Box sx={{ padding: 2 }}>Acciones</Box>
+            </Th>
+          </Tr>
+        </Thead>
 
         {/* Cuerpo de la tabla */}
-        <TableBody>
+        <Tbody>
           {list.map((row) => (
             <React.Fragment key={row._id}>
-              <TableRow>
+              <Tr>
                 {columns.map((column) => (
-                  <TableCell key={column.field} sx={{ whiteSpace: "nowrap" }}>
-                    {row[column.field as keyof typeof row] || "-"}
-                  </TableCell>
+                  <Td key={column.field} sx={{ whiteSpace: "nowrap" }}>
+                    <Box sx={{ padding: 2 }}>
+                      <Typography variant="body1" textAlign="center">
+                        {row[column.field as keyof typeof row] || "-"}{" "}
+                      </Typography>
+                    </Box>
+                  </Td>
                 ))}
-                <TableCell>
-                  <Button
-                    sx={{ whiteSpace: "nowrap" }}
-                    variant="contained"
-                    onClick={() =>
-                      setExpandedRow(expandedRow === row._id ? null : row._id)
-                    }
-                  >
-                    {expandedRow === row._id ? "Ocultar" : "Ver detalle"}
-                  </Button>
-                </TableCell>
-              </TableRow>
+                <Td>
+                  <Stack direction="row" justifyContent="center" sx={{padding:2}}>
+                    <Button
+                      sx={{ whiteSpace: "nowrap" }}
+                      variant="contained"
+                      onClick={() =>
+                        setExpandedRow(expandedRow === row._id ? null : row._id)
+                      }
+                    >
+                      {expandedRow === row._id ? "Ocultar" : "Ver detalle"}
+                    </Button>
+                  </Stack>
+                </Td>
+              </Tr>
               {/* Fila expandida */}
               {expandedRow === row._id && (
-                <TableRow>
-                  <TableCell colSpan={columns.length + 1}>
+                <Tr>
+                  <Td colSpan={columns.length + 1}>
                     <Box sx={{ padding: 2, backgroundColor: "#f9f9f9" }}>
                       <Box sx={{ marginBottom: 2 }}>
                         <Typography variant="body1">
@@ -111,7 +113,7 @@ export default function GuestTable({ list }: Props) {
                           <strong>
                             {
                               row.tickets?.filter(
-                                (t: typeof ticket) => t.status === "inactive"
+                                (t: TicketItem) => t.status === "inactive"
                               ).length
                             }
                           </strong>
@@ -121,23 +123,27 @@ export default function GuestTable({ list }: Props) {
                           <strong>
                             {
                               row.tickets?.filter(
-                                (t: typeof ticket) => t.status === "active"
+                                (t: typeof TicketItem) => t.status === "active"
                               ).length
                             }
                           </strong>
                         </Typography>
                       </Box>
                       {row.tickets?.map((ticket: TicketItem, index: number) => (
-                        <GuestRow eventId={row.eventId} item={ticket} index={index} key={ticket._id} />
+                        <GuestRow
+                          eventId={row.eventId}
+                          item={ticket}
+                          index={index}
+                          key={ticket._id}
+                        />
                       ))}
                     </Box>
-                  </TableCell>
-                </TableRow>
+                  </Td>
+                </Tr>
               )}
             </React.Fragment>
           ))}
-        </TableBody>
+        </Tbody>
       </Table>
-    </TableContainer>
   );
 }
