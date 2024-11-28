@@ -16,6 +16,7 @@
     "@mui/icons-material": "^6.1.8",
     "@mui/material": "^6.1.8",
     "@mui/material-nextjs": "^6.1.8",
+    "@mui/x-data-grid": "^7.22.3",
     "@mui/x-date-pickers": "^7.22.3",
     "@types/node": "22.9.3",
     "@types/react": "18.3.12",
